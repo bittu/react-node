@@ -4,14 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prestart": "webpack",
+    "start": "node index.js"
   },
   "author": "Sandeep Vemula",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^3.3.6",
     "express": "^4.13.4",
     "react": "^0.14.7",
-    "react-dom": "^0.14.7"
+    "react-dom": "^0.14.7",
+    "socket.io": "^1.4.5",
+    "socket.io-client": "^1.4.5"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -19,9 +23,5 @@
     "babel-loader": "^6.2.4",
     "babel-preset-react": "^6.5.0",
     "webpack": "^1.12.14"
-  },
-    "scripts": {
-        "prestart": "webpack",
-        "start": "node index.js"
-    }
+  }
 }
