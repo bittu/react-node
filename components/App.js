@@ -44,7 +44,9 @@ var App = React.createClass({
        return (
            <div>
                 <Header title={this.state.title} status={this.state.status}></Header>
-                {this.props.children}
+                <div>
+                    {this.props.children && React.cloneElement(this.props.children, {status: this.state.status, title: this.state.title})}
+                </div>
            </div>
        )
     } 

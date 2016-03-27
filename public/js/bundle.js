@@ -56,9 +56,9 @@
 
 	var App = __webpack_require__(216);
 	var Audience = __webpack_require__(268);
-	var Speaker = __webpack_require__(269);
-	var Board = __webpack_require__(270);
-	var Whoops404 = __webpack_require__(271);
+	var Speaker = __webpack_require__(270);
+	var Board = __webpack_require__(271);
+	var Whoops404 = __webpack_require__(272);
 
 	ReactDOM.render(React.createElement(
 	            Router,
@@ -25015,7 +25015,11 @@
 	            'div',
 	            null,
 	            React.createElement(Header, { title: this.state.title, status: this.state.status }),
-	            this.props.children
+	            React.createElement(
+	                'div',
+	                null,
+	                this.props.children && React.cloneElement(this.props.children, { status: this.state.status, title: this.state.title })
+	            )
 	        );
 	    }
 	});
@@ -32644,15 +32648,24 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var Display = __webpack_require__(269);
 
 	var Audience = React.createClass({
 	    displayName: 'Audience',
 
 	    render() {
 	        return React.createElement(
-	            'h1',
+	            'div',
 	            null,
-	            'Audience'
+	            React.createElement(
+	                Display,
+	                { 'if': this.props.status === 'connected' },
+	                React.createElement(
+	                    'h1',
+	                    null,
+	                    'Join the room'
+	                )
+	            )
 	        );
 	    }
 	});
@@ -32661,6 +32674,26 @@
 
 /***/ },
 /* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+
+	var Display = React.createClass({
+		displayName: 'Display',
+
+		render() {
+			return this.props.if ? React.createElement(
+				'div',
+				null,
+				this.props.children
+			) : null;
+		}
+	});
+
+	module.exports = Display;
+
+/***/ },
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -32680,7 +32713,7 @@
 	module.exports = Speaker;
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -32700,19 +32733,29 @@
 	module.exports = Board;
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var Link = __webpack_require__(158).Link;
 
 	var Whoops404 = React.createClass({
 	    displayName: 'Whoops404',
 
 	    render() {
 	        return React.createElement(
-	            'h1',
+	            'div',
 	            null,
-	            'Whoops404'
+	            React.createElement(
+	                'h1',
+	                null,
+	                'Whoops404'
+	            ),
+	            React.createElement(
+	                Link,
+	                { to: '/' },
+	                'Home'
+	            )
 	        );
 	    }
 	});
