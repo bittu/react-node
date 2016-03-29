@@ -57,8 +57,8 @@
 	var App = __webpack_require__(216);
 	var Audience = __webpack_require__(268);
 	var Speaker = __webpack_require__(271);
-	var Board = __webpack_require__(272);
-	var Whoops404 = __webpack_require__(273);
+	var Board = __webpack_require__(273);
+	var Whoops404 = __webpack_require__(274);
 
 	ReactDOM.render(React.createElement(
 	            Router,
@@ -24976,16 +24976,13 @@
 	    displayName: 'App',
 
 
-	    propTypes: {
-	        children: React.PropTypes.object
-	    },
-
 	    getInitialState() {
 	        return {
 	            status: 'disconnected',
 	            title: '',
 	            member: {},
-	            audience: []
+	            audience: [],
+	            speaker: {}
 	        };
 	    },
 
@@ -32675,6 +32672,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+
 	var Display = __webpack_require__(269);
 	var Join = __webpack_require__(270);
 
@@ -32793,15 +32791,14 @@
 
 	var React = __webpack_require__(1);
 
+	var Display = __webpack_require__(269);
+	var JoinSpeaker = __webpack_require__(272);
+
 	var Speaker = React.createClass({
 	    displayName: 'Speaker',
 
 	    render() {
-	        return React.createElement(
-	            'h1',
-	            null,
-	            'Speaker'
-	        );
+	        return React.createElement(Display, { 'if': this.props.status === 'connected' });
 	    }
 	});
 
@@ -32809,6 +32806,57 @@
 
 /***/ },
 /* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+
+	var ReactDOM = __webpack_require__(215);
+
+	var JoinSpeaker = React.createClass({
+	  displayName: 'JoinSpeaker',
+
+
+	  start() {
+	    var speakerName = ReactDOM.findDOMNode(this.refs.name).value;
+	    var title = ReactDOM.findDOMNode(this.refs.title).value;
+	    this.props.emit('start', { name: speakerName, title: title });
+	  },
+
+	  render() {
+	    return React.createElement(
+	      'form',
+	      { action: 'javascript:void(0);', onSubmit: this.start },
+	      React.createElement(
+	        'label',
+	        null,
+	        'Name'
+	      ),
+	      React.createElement('input', { ref: 'name',
+	        className: 'form-control',
+	        placeholder: 'enter full name ...',
+	        required: true }),
+	      React.createElement(
+	        'label',
+	        null,
+	        'Title'
+	      ),
+	      React.createElement('input', { ref: 'title',
+	        className: 'form-control',
+	        placeholder: 'full presentation title ...',
+	        required: true }),
+	      React.createElement(
+	        'button',
+	        { className: 'btn btn-primary' },
+	        'Start'
+	      )
+	    );
+	  }
+	});
+
+	module.exports = JoinSpeaker;
+
+/***/ },
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -32828,7 +32876,7 @@
 	module.exports = Board;
 
 /***/ },
-/* 273 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
