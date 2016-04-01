@@ -9,7 +9,8 @@ module.exports = {
                 exclude: /(node-modules|index.js|libs)/,
                 loader: 'babel-loader',
                 query: {
-                    presets: ['react']
+                    compact: false,
+                    presets: ['react', 'es2015']
                 }
             }
         ]
