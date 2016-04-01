@@ -8,6 +8,12 @@ var audience = [];
 var speaker = {};
 var questions = require('./app-questions');
 var currentQuestion = false;
+var results = {
+    a: 0,
+    b: 0,
+    c: 0,
+    d: 0
+};
 
 app.use(express.static('./public'));
 app.use(express.static('./node_modules/bootstrap/dist'));
@@ -40,7 +46,8 @@ io.sockets.on('connection', function(socket) {
        audience: audience,
        speaker: speaker.name,
        questions: questions,
-       currentQuestion: currentQuestion
+       currentQuestion: currentQuestion,
+       results: results
     });
     socket.on("join", function(payload) {
         var member = {
@@ -67,8 +74,14 @@ io.sockets.on('connection', function(socket) {
     });
     socket.on('ask', function(question) {
         currentQuestion = question;
+        results = {a: 0, b: 0, c: 0, d: 0};
         io.sockets.emit('ask', currentQuestion);
         console.log('Question asked : %s', currentQuestion);
+    });
+    socket.on('answer', function(payload) {
+        results[payload.choice]++;
+        console.log('Answer is %s - %j', payload.choice, results);
+        io.sockets.emit('results', results);
     });
     connections.push(socket);
     console.log('connected %s sockets connected', connections.length);
